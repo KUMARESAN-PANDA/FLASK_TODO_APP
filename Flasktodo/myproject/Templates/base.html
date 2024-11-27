@@ -4,37 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
-<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
     <title>Todo List</title>
 </head>
 <body>
-    <div class="ui container "style="margin-top: 30px;"">
-    <h1 "class="ui center aligned header">Todo List</h1>
-    <form class="ui form"action="/add" method="post">
-        <div>
-            <label for="title">Todo list</label>
-            <input type="text" name="title" placeholder="todo lidt...">
-            <br>
-            <button type="submit"class="ui blue button">Add</button>
+    <div class="ui container" style="margin-top: 30px;">
+        <h1 class="ui center aligned header">Todo List</h1>
+        <form class="ui form" action="/add" method="post">
+            <div class="field">
+                <label for="title">Todo List</label>
+                <input type="text" id="title" name="title" placeholder="Enter a todo...">
+            </div>
+            <button type="submit" class="ui blue button">Add</button>
+        </form>
+
+        <div class="ui divided items" style="margin-top: 20px;">
+            {% for i in ls %}
+            <div class="item">
+                <div class="content">
+                    <h3 class="header">{{ i.id }} | {{ i.title }}</h3>
+                    <div class="description">
+                        {% if i.complete == False %}
+                        <span class="ui grey label">Not Completed</span>
+                        {% else %}
+                        <span class="ui green label">Completed</span>
+                        {% endif %}
+                    </div>
+                    <div class="extra">
+                        <a class="ui blue button" href="/update/{{ i.id }}">Update</a>
+                        <a class="ui red button" href="/delete/{{ i.id }}">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-    </form>
-    {% for i in ls %}
-    <div class="ui segment">
-    <p class="ui big header">{{ i.id }} | {{i.title}}</p>
-
-    {% if i.complete==False  %}
-    <span class="ui grey label">Not Completed</span>
-    {% else %}
-    <span class="ui green label">Completed</span>
-    {% endif %}
-    <a class="ui blue button" href="/update/{{ i.id }}">Update</a>
-    <a  class="ui red button" href="/delete/{{ i.id }}">Delete</a>
-</div>
-    {% endfor %}
-
-</div>
-
-    
-    
+    </div>
 </body>
 </html>
